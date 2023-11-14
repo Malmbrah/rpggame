@@ -1,0 +1,12 @@
+{
+  "name": "",
+  "class": "",
+  "experience": 0,
+  "attributes": {
+    "HP": 0,
+    "STRENGTH": 0,
+    "MAGIC": 0,
+    "STEALTH": 0,
+    "LUCK": 0
+  }
+}

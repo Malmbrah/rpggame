@@ -1,0 +1,32 @@
+[
+    {
+        "race": "ORC",
+        "attributes": {
+            "HP": 5,
+            "STRENGTH": 3,
+            "MAGIC": 1,
+            "STEALTH": 1,
+            "LUCK": 5 
+        }
+    }, 
+    {
+        "race": "ELF",
+        "attributes": {
+            "HP": 3,
+            "STRENGTH": 1,
+            "MAGIC": 3,
+            "STEALTH": 1,
+            "LUCK": 5 
+        }
+    },
+    {
+        "race": "HUMAN",
+        "attributes": {
+            "HP": 2,
+            "STRENGTH": 1,
+            "MAGIC": 1,
+            "STEALTH": 3,
+            "LUCK": 5 
+        }
+    }
+]

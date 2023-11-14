@@ -1,0 +1,32 @@
+[
+    {
+        "class": "WARRIOR",
+        "attributes": {
+            "HP": 10,
+            "STRENGTH": 10,
+            "MAGIC": 1,
+            "STEALTH": 5,
+            "LUCK": 5 
+        }
+    }, 
+    {
+        "class": "MAGE",
+        "attributes": {
+            "HP": 6,
+            "STRENGTH": 1,
+            "MAGIC": 10,
+            "STEALTH": 5,
+            "LUCK": 5 
+        }
+    },
+    {
+        "class": "ROGUE",
+        "attributes": {
+            "HP": 8,
+            "STRENGTH": 7,
+            "MAGIC": 3,
+            "STEALTH": 10,
+            "LUCK": 5 
+        }
+    }
+]
