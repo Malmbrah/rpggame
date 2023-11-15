@@ -87,24 +87,24 @@ const classSelector = (classes) => {
     }
 }
 
-/*
-const characterBackground = (characterName) => {
-    const homeTown = prompt("WHERE ARE YOU FROM?: ").toUpperCase();
-    const childHood = prompt("IF YOU COULD SUM UP YOUR CHILDHOOD WITH ONE WORD, WHAT WOULD IT BE?: ").toUpperCase();
-    
-    let updatedCharacterWithBackground = {
-        ...character,
-        "name": characterName,
-        "hometown": homeTown,
-        "childhood": childHood
+const levelUp = (character) => {
+    let newCharacter = {    
+        "name": character.name,
+        "race": character.race,
+        "class": character.class,
+        "experience": character.experience, 
+        "attributes": {
+            "HP": character.attributes.HP + 100,
+            "STRENGTH": character.attributes.STRENGTH + 100,
+            "MAGIC": character.attributes.MAGIC + 100,
+            "STEALTH": character.attributes.STEALTH + 100,
+            "LUCK": character.attributes.LUCK 
+            }
     }
-
-    const updatedCharacterDataWithBackground = JSON.stringify(updatedCharacterWithBackground, null, 2);
-
-    let writeUpdatedCharacterData = fs.writeFileSync(filepathToCharacter, updatedCharacterDataWithBackground);
-
-    return writeUpdatedCharacterData;
-}*/
+    const characterLevelUp = JSON.stringify(newCharacter, null, 2);
+    //Skriver til filen
+    fs.writeFileSync(filepathToCharacter, characterLevelUp);
+}
 
 //Bare for min del
 const resetCharacterToDefault = () => {
@@ -171,7 +171,10 @@ const characterCreation = () => {
 }
 
 const game = () => {
+
     characterCreation();
+
 }
 
-game();
+//game();
+

@@ -1,13 +1,13 @@
 {
-  "name": "KLAS",
-  "race": "HUMAN",
-  "class": "ROGUE",
+  "name": "HERRO",
+  "race": "ELF",
+  "class": "MAGE",
   "experience": 0,
   "attributes": {
-    "HP": 10,
-    "STRENGTH": 8,
-    "MAGIC": 4,
-    "STEALTH": 13,
+    "HP": 109,
+    "STRENGTH": 102,
+    "MAGIC": 113,
+    "STEALTH": 106,
     "LUCK": 10
   }
 }
