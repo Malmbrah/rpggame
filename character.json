@@ -1,13 +1,13 @@
 {
-  "name": "JON",
-  "race": "ORC",
-  "class": "MAGE",
+  "name": "KLAS",
+  "race": "HUMAN",
+  "class": "ROGUE",
   "experience": 0,
   "attributes": {
-    "HP": 11,
-    "STRENGTH": 4,
-    "MAGIC": 11,
-    "STEALTH": 6,
+    "HP": 10,
+    "STRENGTH": 8,
+    "MAGIC": 4,
+    "STEALTH": 13,
     "LUCK": 10
   }
 }

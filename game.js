@@ -41,8 +41,9 @@ const checkIfClassExists = (classChoice, classes) => {
 }
 
 const checkIfRaceExists = (raceChoice, races) => {
-    
+
     let raceExists = false;
+    
     //Går gjennom races og ser om den finnes
     for(let i = 0; i < races.length; i++){
         //Sjekker om det bruker har valgt finnes
@@ -54,9 +55,12 @@ const checkIfRaceExists = (raceChoice, races) => {
     return raceExists;
 }
 
-const raceSelector = (raceChoice, races) => {
-    
+const raceSelector = (races) => {
+
     while(true){
+
+        const raceChoice = prompt("WHAT RACE DO YOU WANT TO PLAY? (ORC)/(ELF)/(HUMAN): ").toUpperCase();
+
         if(checkIfRaceExists(raceChoice, races)){
             //Finne race brukeren har valgt
             const selectedRace = races.find((r) => r.race === raceChoice);
@@ -67,9 +71,12 @@ const raceSelector = (raceChoice, races) => {
     }
 }
 
-const classSelector = (classChoice, classes) => {
+const classSelector = (classes) => {
 
     while(true){
+
+        const classChoice = prompt("WHAT CLASS DO YOU WANT TO PLAY U FUCK? (WARRIOR)/(MAGE)/(ROGUE): ").toUpperCase();
+
         if(checkIfClassExists(classChoice, classes)){
             //Finner class brukeren har valgt
             const selectedClass = classes.find((c => c.class === classChoice));
@@ -134,30 +141,37 @@ const characterCreation = () => {
             break;
         }
 
-        const raceChoice = prompt("WHAT RACE DO YOU WANT TO PLAY? (ORC)/(ELF)/(HUMAN): ").toUpperCase();
-
-        const classChoice = prompt("WHAT CLASS DO YOU WANT TO PLAY U FUCK? (WARRIOR)/(MAGE)/(ROGUE): ").toUpperCase();
-
+        //la i en enkel variabel her. Fordi når jeg prøvde å ha raceSelector(races).attributes.HP osv i newCharacter måtte man gjennom consolen hver gang
+        let recieveRace = raceSelector(races);
+        let recieveClass = classSelector(classes);
+        
         const characterName = prompt("TELL ME HERO, WHAT IS THE NAME YOU HAVE CHOSEN?: ").toUpperCase();
 
         //Lager en ny character med de forskjellige verdiene, adderer verdiene fra race og class
         let newCharacter = {    
             "name": characterName,
-            "race": raceSelector(raceChoice, races).race,
-            "class": classSelector(classChoice, classes).class,
+            "race": recieveRace.race,
+            "class": recieveClass.class,
             "experience": 0,
             "attributes": {
-                "HP": raceSelector(raceChoice, races).attributes.HP + classSelector(classChoice, classes).attributes.HP,
-                "STRENGTH": raceSelector(raceChoice, races).attributes.STRENGTH + classSelector(classChoice, classes).attributes.STRENGTH,
-                "MAGIC": raceSelector(raceChoice, races).attributes.MAGIC + classSelector(classChoice, classes).attributes.MAGIC,
-                "STEALTH": raceSelector(raceChoice, races).attributes.STEALTH + classSelector(classChoice, classes).attributes.STEALTH,
-                "LUCK": raceSelector(raceChoice, races).attributes.LUCK + classSelector(classChoice, classes).attributes.LUCK
+                "HP": recieveRace.attributes.HP + recieveClass.attributes.HP,
+                "STRENGTH": recieveRace.attributes.STRENGTH + recieveClass.attributes.STRENGTH,
+                "MAGIC": recieveRace.attributes.MAGIC + recieveClass.attributes.MAGIC,
+                "STEALTH": recieveRace.attributes.STEALTH + recieveClass.attributes.STEALTH,
+                "LUCK": recieveRace.attributes.LUCK + recieveClass.attributes.LUCK
                 }
         }
 
+        //Gjør det om til en JSON string
         const createANewCharacter = JSON.stringify(newCharacter, null, 2);
+        //Skriver til filen
         fs.writeFileSync(filepathToCharacter, createANewCharacter);
         break;    
     }
 }
 
+const game = () => {
+    characterCreation();
+}
+
+game();
