@@ -60,25 +60,7 @@ const raceSelector = (raceChoice, races) => {
         if(checkIfRaceExists(raceChoice, races)){
             //Finne race brukeren har valgt
             const selectedRace = races.find((r) => r.race === raceChoice);
-
-            let newCharacter = {
-                "race": selectedRace.race,
-                "attributes": {
-                    "HP": selectedRace.attributes.HP,
-                    "STRENGTH": selectedRace.attributes.STRENGTH,
-                    "MAGIC": selectedRace.attributes.MAGIC,
-                    "STEALTH": selectedRace.attributes.STEALTH,
-                    "LUCK": selectedRace.attributes.LUCK
-                }
-            };
-
-            //Omgjør dette til et JSON
-            const characterData = JSON.stringify(newCharacter, null, 2);
-
-            //Skriver dette over på filen character.json
-            let updatedCharacter = fs.writeFileSync(filepathToCharacter, characterData);
-            return updatedCharacter;
-            //break;
+            return selectedRace;
         } else {
             console.log("This race do not exists, try again: ");
         }
@@ -91,43 +73,38 @@ const classSelector = (classChoice, classes) => {
         if(checkIfClassExists(classChoice, classes)){
             //Finner class brukeren har valgt
             const selectedClass = classes.find((c => c.class === classChoice));
-
-            //Oppdaterer character med attributes fra class og legger til class
-            let updatedCharacter = {
-                ...character,
-                "class": selectedClass.class,
-                "attributes": {
-                    ...character.attributes,
-                    "HP": character.attributes.HP + selectedClass.attributes.HP,
-                    "STRENGTH": character.attributes.STRENGTH + selectedClass.attributes.STRENGTH,
-                    "MAGIC": character.attributes.MAGIC + selectedClass.attributes.MAGIC,
-                    "STEALTH": character.attributes.STEALTH + selectedClass.attributes.STEALTH,
-                    "LUCK": character.attributes.LUCK + selectedClass.attributes.LUCK
-                }
-            };
-
-            //Omgjør dette til et JSON
-            const updatedCharacterData = JSON.stringify(updatedCharacter, null, 2);
-
-            //Skriver dette over på filen character.json
-            let thisUpdatedCharacter = fs.writeFileSync(filepathToCharacter, updatedCharacterData);
-            return thisUpdatedCharacter;
-            //break;
+            return selectedClass;
         } else {
             console.log("This class do not exists, try again: ");
         }
     }
 }
 
-const characterBackground = () => {
+/*
+const characterBackground = (characterName) => {
+    const homeTown = prompt("WHERE ARE YOU FROM?: ").toUpperCase();
+    const childHood = prompt("IF YOU COULD SUM UP YOUR CHILDHOOD WITH ONE WORD, WHAT WOULD IT BE?: ").toUpperCase();
     
-}
+    let updatedCharacterWithBackground = {
+        ...character,
+        "name": characterName,
+        "hometown": homeTown,
+        "childhood": childHood
+    }
+
+    const updatedCharacterDataWithBackground = JSON.stringify(updatedCharacterWithBackground, null, 2);
+
+    let writeUpdatedCharacterData = fs.writeFileSync(filepathToCharacter, updatedCharacterDataWithBackground);
+
+    return writeUpdatedCharacterData;
+}*/
 
 //Bare for min del
 const resetCharacterToDefault = () => {
 
         let resetCharacter = {
             "name": "",
+            "race": "",
             "class": "",
             "experience": 0,
             "attributes": {
@@ -158,54 +135,29 @@ const characterCreation = () => {
         }
 
         const raceChoice = prompt("WHAT RACE DO YOU WANT TO PLAY? (ORC)/(ELF)/(HUMAN): ").toUpperCase();
-        raceSelector(raceChoice, races);
 
-        const classChoice = prompt("WHAT CLASS DO YOU WANT TO PLAY? (WARRIOR)/(MAGE)/(ROGUE): ").toUpperCase();
-        classSelector(classChoice, classes);
+        const classChoice = prompt("WHAT CLASS DO YOU WANT TO PLAY U FUCK? (WARRIOR)/(MAGE)/(ROGUE): ").toUpperCase();
 
-        console.log(character);
-    }
-/*
-    while(true){
+        const characterName = prompt("TELL ME HERO, WHAT IS THE NAME YOU HAVE CHOSEN?: ").toUpperCase();
 
-        const raceChoice = prompt("WHAT RACE DO YOU WANT TO PLAY? (ORC)/(ELF)/(HUMAN): ").toUpperCase();
-        
-        if(checkIfRaceExists(raceChoice, races)) {
-
-            //Finne race brukeren har valgt
-            const selectedRace = races.find((r) => r.race === raceChoice);
-
-            const classChoice = prompt("WHAT CLASS DO YOU WANT TO PLAY? (WARRIOR)/(MAGE)/(ROGUE): ").toUpperCase();
-
-            if(checkIfClassExists(classChoice, classes)){
-
-                //Finner class brukeren har valgt
-                const selectedClass = classes.find((c => c.class === classChoice));
-
-                const characterName = prompt("WHAT IS THE NAME OF YOUR " + classChoice + "? : ").toUpperCase();
-
-                //Lager et nytt objekt med class og attributes fra class bruker har valgt
-                const newCharacter = {
-                    "name": characterName,
-                    "race": selectedRace.race,
-                    "class": selectedClass.class,
-                    "attributes": selectedClass.attributes
-                };
-
-                //Omgjør dette til et JSON
-                const characterData = JSON.stringify(newCharacter, null, 2);
-
-                //Skriver dette over på filen character.json
-                fs.writeFileSync("character.json", characterData);
-
-                break;
-            } else {
-                console.log("This class do not exists, try again: ");
-            }
-        } else {
-            console.log("This race do not exists, try again: ");
+        //Lager en ny character med de forskjellige verdiene, adderer verdiene fra race og class
+        let newCharacter = {    
+            "name": characterName,
+            "race": raceSelector(raceChoice, races).race,
+            "class": classSelector(classChoice, classes).class,
+            "experience": 0,
+            "attributes": {
+                "HP": raceSelector(raceChoice, races).attributes.HP + classSelector(classChoice, classes).attributes.HP,
+                "STRENGTH": raceSelector(raceChoice, races).attributes.STRENGTH + classSelector(classChoice, classes).attributes.STRENGTH,
+                "MAGIC": raceSelector(raceChoice, races).attributes.MAGIC + classSelector(classChoice, classes).attributes.MAGIC,
+                "STEALTH": raceSelector(raceChoice, races).attributes.STEALTH + classSelector(classChoice, classes).attributes.STEALTH,
+                "LUCK": raceSelector(raceChoice, races).attributes.LUCK + classSelector(classChoice, classes).attributes.LUCK
+                }
         }
-    }*/
+
+        const createANewCharacter = JSON.stringify(newCharacter, null, 2);
+        fs.writeFileSync(filepathToCharacter, createANewCharacter);
+        break;    
+    }
 }
 
-characterCreation();

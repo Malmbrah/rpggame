@@ -1,12 +1,13 @@
 {
-  "name": "",
-  "class": "",
+  "name": "JON",
+  "race": "ORC",
+  "class": "MAGE",
   "experience": 0,
   "attributes": {
-    "HP": 0,
-    "STRENGTH": 0,
-    "MAGIC": 0,
-    "STEALTH": 0,
-    "LUCK": 0
+    "HP": 11,
+    "STRENGTH": 4,
+    "MAGIC": 11,
+    "STEALTH": 6,
+    "LUCK": 10
   }
 }
