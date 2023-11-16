@@ -21,7 +21,7 @@ const readDataFromFile = (filepath) => {
     }
 }
 
-//Storing the classes in an accessible array
+//Storing the classes in an accessible way
 let classes = readDataFromFile(filepathToClasses);
 let races = readDataFromFile(filepathToRaces);
 let character = readDataFromFile(filepathToCharacter);
@@ -173,6 +173,15 @@ const characterCreation = () => {
     }
 }
 
+const userMagicAttack = (character, enemy) => {
+    //Skal gjøre at det blir flere ting tatt i betraktning før det blir registrert f.eks at man ikke får en clean hit 
+    enemy.attributes.HP -= character.attributes.MAGIC;
+    //Henter inn attributes fra enemy og oppdaterer enemy HP
+    enemy.attributes = {...enemy.attributes, "HP": enemy.attributes.HP};
+    //Skriver til filen
+    fs.writeFileSync(filepathToEnemyElf, JSON.stringify(enemy, null, 2));
+}
+
 const userStrengthAttack = (character, enemy) => {
     //Skal gjøre at det blir flere ting tatt i betraktning før det blir registrert f.eks at man ikke får en clean hit 
     enemy.attributes.HP -= character.attributes.STRENGTH;
@@ -182,6 +191,15 @@ const userStrengthAttack = (character, enemy) => {
     fs.writeFileSync(filepathToEnemyElf, JSON.stringify(enemy, null, 2));
 }
 
+const userStealthAttack = (character, enemy) => {
+        //Skal gjøre at det blir flere ting tatt i betraktning før det blir registrert f.eks at man ikke får en clean hit 
+        enemy.attributes.HP -= character.attributes.STEALTH;
+        //Henter inn attributes fra enemy og oppdaterer enemy HP
+        enemy.attributes = {...enemy.attributes, "HP": enemy.attributes.HP};
+        //Skriver til filen
+        fs.writeFileSync(filepathToEnemyElf, JSON.stringify(enemy, null, 2));
+}
+
 //Siden det er en Elf og de spesialiserer seg på magi
 const enemyMagicAttack = (character, enemy) => {
     character.attributes.HP -= enemy.attributes.MAGIC;
@@ -189,24 +207,44 @@ const enemyMagicAttack = (character, enemy) => {
     fs.writeFileSync(filepathToCharacter, JSON.stringify(character, null, 2));
 }
 
-
-const whatAttack = prompt("WHAT ATTACK WOULD YOU LIKE TO USE? (STR/STH/MAG) : ").toUpperCase();
-
-if(whatAttack == "STR"){
-    userStrengthAttack(character, enemyElf);
+const checkIfDead = (character, enemy) => {
+    if(character.attributes.HP <= 0){
+        return console.log("You are unfortunately dead. ");
+    } else if(enemy.attributes.HP<= 0){
+        return console.log("You have killed your enemy. Congratulations!");
+    }
 }
 
+const encounter = (enemy) => {
 
+    console.log("YOU HAVE ENCOUNTERED AN " + enemy.name + ", PREPARE TO FIGHT!");
+    const whatAttack = prompt("WHAT ATTACK WOULD YOU LIKE TO USE? (STR/STH/MAG) : ").toUpperCase();
 
-
+    while(true) {
+        if(whatAttack == "STR"){
+            userStrengthAttack(character, enemy);
+            checkIfDead(character, enemy);
+            break;
+        }else if(whatAttack == "MAG") {
+            userMagicAttack(character, enemy);
+            checkIfDead(character, enemy);
+            break;
+        }else if(whatAttack == "STH") {
+            userStealthAttack(character, enemy);
+            checkIfDead(character, enemy);
+            break;
+        } else {
+            console.log("INVALID ATTACK, TRY AGAIN: ");
+        }
+    }
+}
 
 const game = () => {
 
-    characterCreation();
+    //characterCreation();
+    encounter(enemyElf);
 
 }
 
-
-
-//game();
+game();
 
