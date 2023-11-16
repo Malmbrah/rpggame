@@ -7,6 +7,7 @@ const prompt = require("prompt-sync")();
 const filepathToClasses = "classes.json";
 const filepathToRaces = "races.json"; 
 const filepathToCharacter = "character.json";
+const filepathToEnemyElf = "enemyELF.json";
 
 //Les data fra filen
 const readDataFromFile = (filepath) => {
@@ -24,6 +25,8 @@ const readDataFromFile = (filepath) => {
 let classes = readDataFromFile(filepathToClasses);
 let races = readDataFromFile(filepathToRaces);
 let character = readDataFromFile(filepathToCharacter);
+let enemy = readDataFromFile(filepathToEnemyElf);
+
 
 const checkIfClassExists = (classChoice, classes) => {
     
@@ -170,7 +173,11 @@ const characterCreation = () => {
     }
 }
 
-const attack = () => {
+const userAttack = (character, enemy) => {
+
+}
+
+const enemyAttack = (character, enemy) => {
 
 }
 
