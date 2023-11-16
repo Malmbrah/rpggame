@@ -25,7 +25,7 @@ const readDataFromFile = (filepath) => {
 let classes = readDataFromFile(filepathToClasses);
 let races = readDataFromFile(filepathToRaces);
 let character = readDataFromFile(filepathToCharacter);
-let enemy = readDataFromFile(filepathToEnemyElf);
+let enemyElf = readDataFromFile(filepathToEnemyElf);
 
 
 const checkIfClassExists = (classChoice, classes) => {
@@ -173,13 +173,31 @@ const characterCreation = () => {
     }
 }
 
-const userAttack = (character, enemy) => {
-
+const userStrengthAttack = (character, enemy) => {
+    //Skal gjøre at det blir flere ting tatt i betraktning før det blir registrert f.eks at man ikke får en clean hit 
+    enemy.attributes.HP -= character.attributes.STRENGTH;
+    //Henter inn attributes fra enemy og oppdaterer enemy HP
+    enemy.attributes = {...enemy.attributes, "HP": enemy.attributes.HP};
+    //Skriver til filen
+    fs.writeFileSync(filepathToEnemyElf, JSON.stringify(enemy, null, 2));
 }
 
-const enemyAttack = (character, enemy) => {
-
+//Siden det er en Elf og de spesialiserer seg på magi
+const enemyMagicAttack = (character, enemy) => {
+    character.attributes.HP -= enemy.attributes.MAGIC;
+    character.attributes = {...character.attributes, "HP": character.attributes.HP};
+    fs.writeFileSync(filepathToCharacter, JSON.stringify(character, null, 2));
 }
+
+
+const whatAttack = prompt("WHAT ATTACK WOULD YOU LIKE TO USE? (STR/STH/MAG) : ").toUpperCase();
+
+if(whatAttack == "STR"){
+    userStrengthAttack(character, enemyElf);
+}
+
+
+
 
 
 const game = () => {
@@ -187,6 +205,8 @@ const game = () => {
     characterCreation();
 
 }
+
+
 
 //game();
 

@@ -4,8 +4,8 @@
   "class": "MAGE",
   "experience": 0,
   "attributes": {
-    "HP": 109,
-    "STRENGTH": 102,
+    "HP": 100,
+    "STRENGTH": 100,
     "MAGIC": 113,
     "STEALTH": 106,
     "LUCK": 10

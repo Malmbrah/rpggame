@@ -1,13 +1,13 @@
 {
-    "name": "Cultist",
-    "race": "ELF",
-    "class": "MAGE",
-    "experience": 0,
-    "attributes": {
-      "HP": 30,
-      "STRENGTH": 20,
-      "MAGIC": 5,
-      "STEALTH": 3,
-      "LUCK": 10
-    }
+  "name": "CASTER",
+  "race": "ELF",
+  "class": "MAGE",
+  "experience": 0,
+  "attributes": {
+    "HP": 49900,
+    "STRENGTH": 20,
+    "MAGIC": 5,
+    "STEALTH": 3,
+    "LUCK": 10
   }
+}
