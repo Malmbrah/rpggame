@@ -170,6 +170,11 @@ const characterCreation = () => {
     }
 }
 
+const attack = () => {
+
+}
+
+
 const game = () => {
 
     characterCreation();
