@@ -1,8 +1,8 @@
 [
     {
-        "chapter_1": "Welcome to my game. You will soon experience something I created to learn JS. Enjoy."
+        "chapter1": {"text": "Welcome to my game. You will soon experience something I created to learn JS. Enjoy."}
     },
     {
-        "chapter_2": "But before any journey, you must create your character. It won't be complicated, I promise."
+        "chapter2": { "text": "But before any journey, you must create your character. It won't be complicated, I promise."}
     }
 ]

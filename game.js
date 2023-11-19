@@ -4,10 +4,18 @@ const fs = require('fs');
 const prompt = require("prompt-sync")();
 
 //Deklarerer hvilken fil det er
-const filepathToClasses = "classes.json";
-const filepathToRaces = "races.json"; 
-const filepathToCharacter = "character.json";
-const filepathToEnemyElf = "enemyELF.json";
+//const filepaths.allClasses = "classes.json";
+//const filepaths.allRaces = "races.json"; 
+//const filepaths.myCharacter = "character.json";
+//const filepaths.enemyElfFile = "enemyELF.json";
+
+const filepaths = {
+    allClasses: "classes.json",
+    allRaces: "races.json",
+    myCharacter: "character.json",
+    enemyElfFile: "enemyELF.json",
+    chapter: "chapters.json"
+};
 
 //Les data fra filen
 const readDataFromFile = (filepath) => {
@@ -22,10 +30,12 @@ const readDataFromFile = (filepath) => {
 }
 
 //Storing the classes in an accessible way
-let classes = readDataFromFile(filepathToClasses);
-let races = readDataFromFile(filepathToRaces);
-let character = readDataFromFile(filepathToCharacter);
-let enemyElf = readDataFromFile(filepathToEnemyElf);
+let classes = readDataFromFile(filepaths.allClasses);
+let races = readDataFromFile(filepaths.allRaces);
+let character = readDataFromFile(filepaths.myCharacter);
+let chapters = readDataFromFile(filepaths.chapter);
+let enemyElf = readDataFromFile(filepaths.enemyElfFile);
+
 
 
 const checkIfClassExists = (classChoice, classes) => {
@@ -106,7 +116,7 @@ const levelUp = (character) => {
     }
     const characterLevelUp = JSON.stringify(newCharacter, null, 2);
     //Skriver til filen
-    fs.writeFileSync(filepathToCharacter, characterLevelUp);
+    fs.writeFileSync(filepaths.myCharacter, characterLevelUp);
 }
 
 //Bare for min del
@@ -130,7 +140,7 @@ const resetCharacterToDefault = () => {
         const updatedCharacterData = JSON.stringify(resetCharacter, null, 2);
 
         //Skriver dette over på filen character.json
-        fs.writeFileSync(filepathToCharacter, updatedCharacterData);
+        fs.writeFileSync(filepaths.myCharacter, updatedCharacterData);
         console.log("Character has been reset.");
      
 }
@@ -168,7 +178,7 @@ const characterCreation = () => {
         //Gjør det om til en JSON string
         const createANewCharacter = JSON.stringify(newCharacter, null, 2);
         //Skriver til filen
-        fs.writeFileSync(filepathToCharacter, createANewCharacter);
+        fs.writeFileSync(filepaths.myCharacter, createANewCharacter);
         break;    
     }
 }
@@ -179,7 +189,7 @@ const userMagicAttack = (character, enemy) => {
     //Henter inn attributes fra enemy og oppdaterer enemy HP
     enemy.attributes = {...enemy.attributes, "HP": enemy.attributes.HP};
     //Skriver til filen
-    fs.writeFileSync(filepathToEnemyElf, JSON.stringify(enemy, null, 2));
+    fs.writeFileSync(filepaths.enemyElfFile, JSON.stringify(enemy, null, 2));
 }
 
 const userStrengthAttack = (character, enemy) => {
@@ -188,7 +198,7 @@ const userStrengthAttack = (character, enemy) => {
     //Henter inn attributes fra enemy og oppdaterer enemy HP
     enemy.attributes = {...enemy.attributes, "HP": enemy.attributes.HP};
     //Skriver til filen
-    fs.writeFileSync(filepathToEnemyElf, JSON.stringify(enemy, null, 2));
+    fs.writeFileSync(filepaths.enemyElfFile, JSON.stringify(enemy, null, 2));
 }
 
 const userStealthAttack = (character, enemy) => {
@@ -197,53 +207,76 @@ const userStealthAttack = (character, enemy) => {
         //Henter inn attributes fra enemy og oppdaterer enemy HP
         enemy.attributes = {...enemy.attributes, "HP": enemy.attributes.HP};
         //Skriver til filen
-        fs.writeFileSync(filepathToEnemyElf, JSON.stringify(enemy, null, 2));
+        fs.writeFileSync(filepaths.enemyElfFile, JSON.stringify(enemy, null, 2));
 }
 
-//Siden det er en Elf og de spesialiserer seg på magi
-const enemyMagicAttack = (character, enemy) => {
-    character.attributes.HP -= enemy.attributes.MAGIC;
-    character.attributes = {...character.attributes, "HP": character.attributes.HP};
-    fs.writeFileSync(filepathToCharacter, JSON.stringify(character, null, 2));
-}
-
-const checkIfDead = (character, enemy) => {
-    if(character.attributes.HP <= 0){
-        return console.log("You are unfortunately dead. ");
-    } else if(enemy.attributes.HP<= 0){
-        return console.log("You have killed your enemy. Congratulations!");
+const userAttack = (character, enemy) => {
+    const whatAttack = prompt("WHAT ATTACK WOULD YOU LIKE TO USE? (STR/STH/MAG) : ").toUpperCase();
+    while(true) {
+        switch(whatAttack){
+            case "STR": 
+                userStrengthAttack(character, enemy);
+                break;
+            case "MAG": 
+                userMagicAttack(character, enemy);
+                break;
+            case "STH":
+                userStealthAttack(character, enemy);
+                break;
+            default:
+                console.log("INVALID ATTACK, TRY AGAIN: ");
+        }
     }
 }
 
-const encounter = (enemy) => {
+const enemyAttack = () => {
 
-    console.log("YOU HAVE ENCOUNTERED AN " + enemy.name + ", PREPARE TO FIGHT!");
-    const whatAttack = prompt("WHAT ATTACK WOULD YOU LIKE TO USE? (STR/STH/MAG) : ").toUpperCase();
+    for(let i = 0; i < enemy.attributes; i++){
 
-    while(true) {
-        if(whatAttack == "STR"){
-            userStrengthAttack(character, enemy);
-            checkIfDead(character, enemy);
+    }
+    character.attributes.HP -= enemy.attributes.MAGIC;
+    character.attributes = {...character.attributes, "HP": character.attributes.HP};
+    fs.writeFileSync(filepaths.myCharacter, JSON.stringify(character, null, 2));
+}
+
+const updateCharacter = (character) => {
+    fs.writeFileSync(filepaths.myCharacter, JSON.stringify(character, null, 2));
+}
+
+const isGameOver = (character, enemy) => {
+    if(character.attributes.HP <= 0){
+        return true;
+    } else if(enemy.attributes.HP <= 0){
+       return false;
+    }
+}
+
+const encounter = (character, enemy) => {
+
+    console.log("YOU HAVE ENCOUNTERED A " + enemy.name + ", PREPARE TO FIGHT!");
+    //Turn-based battle
+    while(true){
+        userAttack(character, enemy);
+        if(isGameOver(character, enemy)){
+            console.log("YOU DIED, GAME OVER");
             break;
-        }else if(whatAttack == "MAG") {
-            userMagicAttack(character, enemy);
-            checkIfDead(character, enemy);
+        }
+        enemyAttack(character, enemy);
+        if(isGameOver(character, enemy)){
+            console.log("VICTORY");
             break;
-        }else if(whatAttack == "STH") {
-            userStealthAttack(character, enemy);
-            checkIfDead(character, enemy);
-            break;
-        } else {
-            console.log("INVALID ATTACK, TRY AGAIN: ");
         }
     }
 }
 
 const game = () => {
 
-    //characterCreation();
-    encounter(enemyElf);
-
+    console.log(chapters[0].chapter1.text + "\n" + chapters[1].chapter2.text)
+    const newCharacterQuestion = prompt("Do you want to create a new character? (y/n): ").toUpperCase();
+    if(newCharacterQuestion == "Y"){
+        characterCreation();
+    } 
+    encounter(character, enemyElf);
 }
 
 game();
