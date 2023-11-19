@@ -1,12 +1,12 @@
 {
-  "name": "FRANK",
-  "race": "ORC",
-  "class": "WARRIOR",
+  "name": "HERO",
+  "race": "ELF",
+  "class": "MAGE",
   "experience": 0,
   "attributes": {
-    "HP": 15,
-    "STRENGTH": 13,
-    "MAGIC": 2,
+    "HP": 9,
+    "STRENGTH": 2,
+    "MAGIC": 13,
     "STEALTH": 6,
     "LUCK": 10
   }

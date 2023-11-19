@@ -120,7 +120,7 @@ const levelUp = (character) => {
 }
 
 //Bare for min del
-const resetCharacterToDefault = () => {
+/*const resetCharacterToDefault = () => {
 
         let resetCharacter = {
             "name": "",
@@ -143,16 +143,16 @@ const resetCharacterToDefault = () => {
         fs.writeFileSync(filepaths.myCharacter, updatedCharacterData);
         console.log("Character has been reset.");
      
-}
+}*/
 
 const characterCreation = () => {
 
     while(true){
-        const resetChoice = prompt("Do you want to reset your character to default? (y/n): ").toUpperCase();
+       /* const resetChoice = prompt("Do you want to reset your character to default? (y/n): ").toUpperCase();
         if(resetChoice == "Y") {
             resetCharacterToDefault();
             break;
-        }
+        }*/
 
         //la i en enkel variabel her. Fordi når jeg prøvde å ha raceSelector(races).attributes.HP osv i newCharacter måtte man gjennom consolen hver gang
         let recieveRace = raceSelector(races);
@@ -225,21 +225,15 @@ const userAttack = (character, enemy) => {
                 break;
             default:
                 console.log("INVALID ATTACK, TRY AGAIN: ");
-        }
+                continue;
+            }
+        break;
     }
 }
 
-const enemyAttack = () => {
-
-    for(let i = 0; i < enemy.attributes; i++){
-
-    }
+const enemyAttack = (character, enemy) => {
     character.attributes.HP -= enemy.attributes.MAGIC;
     character.attributes = {...character.attributes, "HP": character.attributes.HP};
-    fs.writeFileSync(filepaths.myCharacter, JSON.stringify(character, null, 2));
-}
-
-const updateCharacter = (character) => {
     fs.writeFileSync(filepaths.myCharacter, JSON.stringify(character, null, 2));
 }
 
@@ -258,12 +252,12 @@ const encounter = (character, enemy) => {
     while(true){
         userAttack(character, enemy);
         if(isGameOver(character, enemy)){
-            console.log("YOU DIED, GAME OVER");
+            console.log("VICTORY!");
             break;
         }
         enemyAttack(character, enemy);
         if(isGameOver(character, enemy)){
-            console.log("VICTORY");
+            console.log("YOU DIED, GAME OVER!");
             break;
         }
     }
